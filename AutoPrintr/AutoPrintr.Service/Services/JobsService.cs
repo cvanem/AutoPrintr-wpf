@@ -487,12 +487,12 @@ namespace AutoPrintr.Service.Services
 
                 _pusher = new Pusher(_pusherApplicationKey);
                 _pusher.Error += _pusher_Error;
+                 _pusher.Connected += _pusher_Connected;
                 _pusher.ConnectionStateChanged += _pusher_ConnectionStateChanged;
                 _pusher.Subscribe(_channel)
                        .Bind("print-job", _pusher_ReadResponse);
 
                 _pusher.Connect();
-
                 _loggingService.WriteInformation($"Pusher is started");
             });
         }
@@ -553,6 +553,12 @@ namespace AutoPrintr.Service.Services
             }
         }
 
+        //The newer library reports connected status via its own callback
+        private void _pusher_Connected(object sender)
+        {
+            _connectionAttempts = 0;
+        }
+
         private void _pusher_ConnectionStateChanged(object sender, ConnectionState state)
         {
             _loggingService.WriteInformation($"Pusher is {state}");
@@ -568,10 +574,6 @@ namespace AutoPrintr.Service.Services
                         _connectionAttempts = 0;
                         ConnectionFailedEvent?.Invoke();
                     }
-                }
-                else if (state == ConnectionState.Connected)
-                {
-                    _connectionAttempts = 0;
                 }
             }
             catch (Exception e)

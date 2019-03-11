@@ -30,6 +30,7 @@ namespace AutoPrintr.Service
         #region Methods
         protected override async void OnStart(string[] args)
         {
+            //System.Diagnostics.Debugger.Launch();
             base.OnStart(args);
 
             await ServiceApp.Instance.Startup(args);

@@ -66,7 +66,7 @@
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
-    </Reference>    
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -96,9 +96,6 @@
     </Reference>
     <Reference Include="Nito.AsyncEx.Enlightenment, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.4.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
-    </Reference>
-    <Reference Include="PusherClient, Version=1.0.6768.17427, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PusherClient.1.0.1-beta\lib\net462\PusherClient.dll</HintPath>
     </Reference>
     <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
       <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
@@ -180,6 +177,10 @@
     <ProjectReference Include="..\AutoPrintr.Core\AutoPrintr.Core.csproj">
       <Project>{66486e33-03c5-4205-9adf-486ffbabc67d}</Project>
       <Name>AutoPrintr.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PusherClient\PusherClient.csproj">
+      <Project>{9e30e755-c00e-4bf7-b56b-8f2d836fba60}</Project>
+      <Name>PusherClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
