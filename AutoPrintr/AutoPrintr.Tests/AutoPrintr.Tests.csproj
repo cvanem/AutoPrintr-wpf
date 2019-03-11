@@ -112,10 +112,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileServiceTests.cs" />
-    <Compile Include="..\..\..\..\JobServiceTests.cs">
-      <Link>JobServiceTests.cs</Link>
-    </Compile>
+    <Compile Include="FileServiceTests.cs" />    
+    <Compile Include="JobServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
