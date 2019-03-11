@@ -2,7 +2,7 @@
 using AutoPrintr.Core.Services;
 using GalaSoft.MvvmLight.Ioc;
 using System.Threading.Tasks;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 
 namespace AutoPrintr.Core
 {
