@@ -84,7 +84,7 @@ namespace AutoPrintr.Service.Services
             if (localJob == null)
                 return;
 
-            PrintDocument(localJob, true);
+            Task.Run(() => PrintDocument(localJob, true));
         }
 
         public void DeleteJobs(IEnumerable<Job> jobs)
@@ -163,7 +163,7 @@ namespace AutoPrintr.Service.Services
         #endregion
 
         #region Printer Methods
-        private async void PrintDocument(Job job, bool manual = false)
+        private async Task PrintDocument(Job job, bool manual = false)
         {
             try
             {
@@ -242,7 +242,7 @@ namespace AutoPrintr.Service.Services
 
                 var newPrintingJobs = _downloadedJobs.Where(x => x.State == JobState.Downloaded).ToList();
                 foreach (var newJob in newPrintingJobs)
-                    PrintDocument(newJob);
+                    Task.Run(() => PrintDocument(newJob));
             }
         }
         #endregion
@@ -252,15 +252,15 @@ namespace AutoPrintr.Service.Services
         {
             _loggingService.WriteInformation($"Starting read jobs");
 
-            _newJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_newJobsFileName) 
+            _newJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_newJobsFileName)
                        ?? new ObservableCollection<Job>();
             _newJobs.CollectionChanged += _newJobs_CollectionChanged;
 
-            _downloadedJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_downloadedJobsFileName) 
+            _downloadedJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_downloadedJobsFileName)
                               ?? new ObservableCollection<Job>();
             _downloadedJobs.CollectionChanged += _downloadedJobs_CollectionChanged;
 
-            _doneJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_doneJobsFileName) 
+            _doneJobs = await _fileService.ReadObjectAsync<ObservableCollection<Job>>(_doneJobsFileName)
                         ?? new ObservableCollection<Job>();
             _doneJobs.CollectionChanged += _doneJobs_CollectionChanged;
 
@@ -271,11 +271,11 @@ namespace AutoPrintr.Service.Services
 
             var localNewJobs = _newJobs.ToList();
             foreach (var newJob in localNewJobs)
-                DownloadDocument(newJob);
+                await DownloadDocument(newJob);
 
             var localDownloadedJobs = _downloadedJobs.ToList();
             foreach (var downloadedJob in localDownloadedJobs)
-                PrintDocument(downloadedJob);
+                await PrintDocument(downloadedJob);
         }
 
         private async void _doneJobs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -327,7 +327,7 @@ namespace AutoPrintr.Service.Services
                 if (e.NewItems != null)
                 {
                     foreach (Job newJob in e.NewItems)
-                        PrintDocument(newJob);
+                        await Task.Run(() => PrintDocument(newJob));
                 }
             }
             catch (Exception exception)
@@ -359,7 +359,7 @@ namespace AutoPrintr.Service.Services
                 if (e.NewItems != null)
                 {
                     foreach (Job newJob in e.NewItems)
-                        DownloadDocument(newJob);
+                        await Task.Run(() => DownloadDocument(newJob));
                 }
             }
             catch (Exception exception)
@@ -368,7 +368,7 @@ namespace AutoPrintr.Service.Services
             }
         }
 
-        private async void DownloadDocument(Job job)
+        private async Task DownloadDocument(Job job)
         {
             try
             {
@@ -487,7 +487,7 @@ namespace AutoPrintr.Service.Services
 
                 _pusher = new Pusher(_pusherApplicationKey);
                 _pusher.Error += _pusher_Error;
-                 _pusher.Connected += _pusher_Connected;
+                _pusher.Connected += _pusher_Connected;
                 _pusher.ConnectionStateChanged += _pusher_ConnectionStateChanged;
                 _pusher.Subscribe(_channel)
                        .Bind("print-job", _pusher_ReadResponse);
