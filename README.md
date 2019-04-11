@@ -16,8 +16,10 @@ Head to our [Help Page](http://feedback.repairshopr.com/knowledgebase/articles/9
 4.  Install Smart Install Maker if not already installed.  The demo version can be used.
 5.  In the Installer Directory, doublick click or open the AutoPrintr.smm file in the Smart Install Maker application
 6.  Update version to match version in step 2.
-7.  Under the files tab, remove all old and unused files and add the newly built files in the AutoPrintr\bin\Release directory.
-8.  Hit the build installer button to produce the installer.
+7.  Under General, set the desired installer filename under the Save as field.
+8.  Verify the correct icon is selected.  Under Interface, select the Icon tab.  Ensure that the icon path points to the correct ico file.
+9.  Under the files tab, remove all old and unused files and add the newly built files in the AutoPrintr\bin\Release directory.
+10.  Hit the build installer button to produce the installer.
 
 ## Open Source
 
