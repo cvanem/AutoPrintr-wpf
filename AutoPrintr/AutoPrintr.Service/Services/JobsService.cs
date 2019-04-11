@@ -122,7 +122,7 @@ namespace AutoPrintr.Service.Services
             if (IsRunning)
                 return;
 
-            _loggingService.WriteInformation($"Startring {nameof(JobsService)}");
+            _loggingService.WriteInformation($"Starting {nameof(JobsService)}");
 
             await ReadJobsFromFiles();
             await RunPusherAsync();
